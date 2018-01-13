@@ -31,7 +31,7 @@ class RestController extends Controller
     {
         $restService = $this->getRestService($this->fileService->findService($entity));
         $encoded = $this->serializer->serialize($restService->findAll(), 'json');
-        return new JsonResponse($encoded);
+        return new Response($encoded, 200, array('Content-Type' => 'application/json'));
     }
 
 
@@ -39,7 +39,7 @@ class RestController extends Controller
     {
         $restService = $this->getRestService($this->fileService->findService($entity));
         $encoded = $this->serializer->serialize($restService->find($id), 'json');
-        return new JsonResponse($encoded);
+        return new Response($encoded, 200, array('Content-Type' => 'application/json'));
     }
 
 
@@ -48,9 +48,9 @@ class RestController extends Controller
         $restService = $this->getRestService($this->fileService->findService($entity));
         try {
             $restService->delete($id);
-            return new JsonResponse(null, 200);
+            return new Response(null, 200,array('Content-Type' => 'application/json'));
         } catch (\Exception $e) {
-            return new JsonResponse('Something went wrong', 200);
+            return new Response('Something went wrong', 400, array('Content-Type' => 'application/json'));
         }
     }
 
@@ -60,9 +60,9 @@ class RestController extends Controller
         $restService = $this->getRestService($this->fileService->findService($entity));
         try {
             $restService->delete($restService->deleteAll());
-            return new JsonResponse(null, 200);
+            return new Response(null, 200,array('Content-Type' => 'application/json'));
         } catch (\Exception $e) {
-            return new JsonResponse('Something went wrong', 400);
+            return new Response('Something went wrong', 400, array('Content-Type' => 'application/json'));
         }
     }
 
@@ -75,12 +75,12 @@ class RestController extends Controller
             $restService = $this->getRestService($this->fileService->findService($entity));
             try {
                 $restService->update($id, $data);
-                return new JsonResponse('OK', 201);
+                return new Response(null, 201);
             } catch (\Exception $e) {
-                return new JsonResponse('Invalid request', 400);
+                return new Response('Invalid request', 400, array('Content-Type' => 'application/json'));
             }
         } else {
-            return new JsonResponse('Invalid request', 400);
+            return new Response('Invalid request', 400, array('Content-Type' => 'application/json'));
         }
     }
 
@@ -93,12 +93,12 @@ class RestController extends Controller
              $restService = $this->getRestService($this->fileService->findService($entity));
             try {
                 $restService->save($data);
-                return new JsonResponse('OK', 201);
+                return new Response(null, 201);
             } catch (\Exception $e) {
-                return new JsonResponse('Invalid request', 400);
+                return new Response('Invalid request', 400, array('Content-Type' => 'application/json'));
             }
         } else {
-            return new JsonResponse('Invalid request', 400);
+            return new Response('Invalid request', 400, array('Content-Type' => 'application/json'));
         }
     }
 
