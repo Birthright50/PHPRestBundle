@@ -59,7 +59,7 @@ class RestController extends Controller
     {
         $restService = $this->getRestService($this->fileService->findService($entity));
         try {
-            $restService->delete($restService->deleteAll());
+            $restService->deleteAll();
             return new Response(null, 200,array('Content-Type' => 'application/json'));
         } catch (\Exception $e) {
             return new Response('Something went wrong', 400, array('Content-Type' => 'application/json'));
