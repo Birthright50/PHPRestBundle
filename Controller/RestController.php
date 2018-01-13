@@ -25,7 +25,7 @@ class RestController extends Controller
 
     public function findAll(string $entity)
     {
-        $restService = $this->getRestService($entity);
+        $restService = $this->getRestService($this->fileService->findService($entity));
         $encoded = json_encode($restService->findAll());
         return new JsonResponse($encoded);
     }
@@ -33,7 +33,7 @@ class RestController extends Controller
 
     public function find(string $entity, $id)
     {
-        $restService = $this->getRestService($entity);
+        $restService = $this->getRestService($this->fileService->findService($entity));
         $encoded = json_encode($restService->find($id));
         return new JsonResponse($encoded);
     }
@@ -41,7 +41,7 @@ class RestController extends Controller
 
     public function delete(string $entity, $id)
     {
-        $restService = $this->getRestService($entity);
+        $restService = $this->getRestService($this->fileService->findService($entity));
         try {
             $restService->delete($id);
             return new JsonResponse(null, 200);
@@ -53,7 +53,7 @@ class RestController extends Controller
 
     public function deleteAll(string $entity)
     {
-        $restService = $this->getRestService($entity);
+        $restService = $this->getRestService($this->fileService->findService($entity));
         try {
             $restService->delete($restService->deleteAll());
             return new JsonResponse(null, 200);
@@ -63,12 +63,12 @@ class RestController extends Controller
     }
 
 
-    public function update(string $entity, $id, Request $request)
+    public function update(string $entity,   $id, Request $request)
     {
         if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
             $data = json_decode($request->getContent());
             //$request->request->replace(is_array($data) ? $data : []);
-            $restService = $this->getRestService($entity);
+            $restService = $this->getRestService($this->fileService->findService($entity));
             try {
                 $restService->update($id, $data);
                 return new JsonResponse('OK', 201);
@@ -86,7 +86,7 @@ class RestController extends Controller
         if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
             $data = json_decode($request->getContent());
             //$request->request->replace(is_array($data) ? $data : []);
-            $restService = $this->getRestService($entity);
+             $restService = $this->getRestService($this->fileService->findService($entity));
             try {
                 $restService->save($data);
                 return new JsonResponse('OK', 201);
