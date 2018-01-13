@@ -93,9 +93,9 @@ class RestController extends Controller
             $restService = $this->getRestService($this->fileService->findService($entity));
             try {
                 $restService->save($data);
-                return new Response(null, 201);
+                return new Response("{OK}", 201,array('Content-Type' => 'application/json'));
             } catch (\Exception $e) {
-                return new Response('Invalid request', 400, array('Content-Type' => 'application/json'));
+                return new Response('{Invalid request}', 400, array('Content-Type' => 'application/json'));
             }
         } else {
             return new Response('Invalid request', 400, array('Content-Type' => 'application/json'));
