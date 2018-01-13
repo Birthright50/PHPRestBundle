@@ -1,0 +1,4 @@
+services:
+#    birthright_super_rest.example:
+#        class: Birthright\SuperRestBundle\Service\FileService
+#        arguments: ["@service_id"]
