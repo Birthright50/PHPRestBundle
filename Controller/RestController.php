@@ -63,14 +63,14 @@ class RestController extends Controller
     }
 
 
-    public function update(string $entity, Request $request)
+    public function update(string $entity, mixed $id, Request $request)
     {
         if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
             $data = json_decode($request->getContent());
             //$request->request->replace(is_array($data) ? $data : []);
             $restService = $this->getRestService($entity);
             try {
-                $restService->update($data);
+                $restService->update($id, $data);
                 return new JsonResponse('OK', 201);
             } catch (\Exception $e) {
                 return new JsonResponse('Invalid request', 400);

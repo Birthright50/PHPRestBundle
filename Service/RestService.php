@@ -20,7 +20,7 @@ interface RestService
 
     function delete(mixed $id);
 
-    function update(mixed $object);
+    function update(mixed $id, mixed $object);
 
     function save(mixed $object);
 }
