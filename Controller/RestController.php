@@ -48,7 +48,7 @@ class RestController extends Controller
         $restService = $this->getRestService($this->fileService->findService($entity));
         try {
             $restService->delete($id);
-            return new Response(null, 200,array('Content-Type' => 'application/json'));
+            return new Response(null, 200, array('Content-Type' => 'application/json'));
         } catch (\Exception $e) {
             return new Response('Something went wrong', 400, array('Content-Type' => 'application/json'));
         }
@@ -60,17 +60,17 @@ class RestController extends Controller
         $restService = $this->getRestService($this->fileService->findService($entity));
         try {
             $restService->deleteAll();
-            return new Response(null, 200,array('Content-Type' => 'application/json'));
+            return new Response(null, 200, array('Content-Type' => 'application/json'));
         } catch (\Exception $e) {
             return new Response('Something went wrong', 400, array('Content-Type' => 'application/json'));
         }
     }
 
 
-    public function update(string $entity,   $id, Request $request)
+    public function update(string $entity, $id, Request $request)
     {
         if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-            $data = json_decode($request->getContent());
+            $data = $request->getContent();
             //$request->request->replace(is_array($data) ? $data : []);
             $restService = $this->getRestService($this->fileService->findService($entity));
             try {
@@ -85,12 +85,12 @@ class RestController extends Controller
     }
 
 
-    public function save(string $entity,  Request $request)
+    public function save(string $entity, Request $request)
     {
         if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-            $data = json_decode($request->getContent());
+            $data = $request->getContent();
             //$request->request->replace(is_array($data) ? $data : []);
-             $restService = $this->getRestService($this->fileService->findService($entity));
+            $restService = $this->getRestService($this->fileService->findService($entity));
             try {
                 $restService->save($data);
                 return new Response(null, 201);
