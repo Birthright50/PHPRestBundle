@@ -63,7 +63,7 @@ class RestController extends Controller
     }
 
 
-    public function update(string $entity, mixed $id, Request $request)
+    public function update(string $entity, $id, Request $request)
     {
         if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
             $data = json_decode($request->getContent());
