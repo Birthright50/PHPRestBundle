@@ -22,6 +22,7 @@ class FileService
     public function findService($entity) :string
     {
         $fullClassName = null;
+
         foreach (glob($this->servicesPath . '/*.*') as $file) {
             $fp = fopen($file, 'r');
             $class = $namespace = $buffer = '';
@@ -60,8 +61,7 @@ class FileService
         if (is_null($fullClassName)) {
             throw new \InvalidArgumentException();
         }
-        return $fullClassName;
-
+        return ltrim($fullClassName, '\\');
     }
 
     private function checkServicePath(string $fullClassName, string $entity): bool
@@ -72,7 +72,7 @@ class FileService
         if ($classAnnotations->isAnnotatedWith('ServiceRestResource')) {
             $urlPath = $classAnnotations->asArray()[$annotation]['path'];
             if ($urlPath === $entity) {
-                return $class->implementsInterface('RestService');
+                return $class->implementsInterface('Birthright\SuperRestBundle\Service\RestService');
             }
         }
         return false;

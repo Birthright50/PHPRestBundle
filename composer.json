@@ -12,7 +12,8 @@
   }],
   "require" : {
     "php": "^7.1.3",
-    "symfony/symfony": "3.4.*"
+    "symfony/symfony": "3.4.*",
+    "jms/serializer-bundle": "^2.3"
   },
   "suggest": {
     "egeloen/ckeditor-bundle": "Allow use ckeditor field"
