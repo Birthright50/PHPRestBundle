@@ -5,28 +5,32 @@ namespace Birthright\SuperRestBundle\Controller;
 
 use Birthright\SuperRestBundle\Service\FileService;
 use Birthright\SuperRestBundle\Service\RestService;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class RestController extends Controller
 {
     private $fileService;
+    private $serializer;
 
 
     /**
      * RestController constructor.
      */
-    public function __construct(FileService $fileService)
+    public function __construct(FileService $fileService, SerializerInterface $serializer)
     {
         $this->fileService = $fileService;
+        $this->serializer = $serializer;
     }
 
     public function findAll(string $entity)
     {
         $restService = $this->getRestService($this->fileService->findService($entity));
-        $encoded = json_encode($restService->findAll());
+        $encoded = $this->serializer->serialize($restService->findAll(), 'json');
         return new JsonResponse($encoded);
     }
 
@@ -34,7 +38,7 @@ class RestController extends Controller
     public function find(string $entity, $id)
     {
         $restService = $this->getRestService($this->fileService->findService($entity));
-        $encoded = json_encode($restService->find($id));
+        $encoded = $this->serializer->serialize($restService->find($id), 'json');
         return new JsonResponse($encoded);
     }
 

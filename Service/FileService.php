@@ -22,7 +22,6 @@ class FileService
     public function findService($entity) :string
     {
         $fullClassName = null;
-
         foreach (glob($this->servicesPath . '/*.*') as $file) {
             $fp = fopen($file, 'r');
             $class = $namespace = $buffer = '';
