@@ -14,13 +14,13 @@ interface RestService
 
     function findAll();
 
-    function find(mixed $id);
+    function find($id);
 
     function deleteAll();
 
-    function delete(mixed $id);
+    function delete($id);
 
-    function update(mixed $id, mixed $object);
+    function update($id, $object);
 
-    function save(mixed $object);
+    function save($object);
 }
